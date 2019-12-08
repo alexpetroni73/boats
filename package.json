@@ -1,0 +1,13 @@
+{
+  "name": "boats",
+  "version": "1.0.0",
+  "description": "booking for divers",
+  "main": "app.js",
+  "scripts": {
+    "start": "node server/src/app.js",
+    "dev": "NODE_ENV=development ./server/node_modules/nodemon/bin/nodemon.js server/src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
