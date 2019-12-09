@@ -15,7 +15,7 @@
 
       <v-flex mb-4>
         <h1 class="display-2 font-weight-bold mb-3">
-          Welcome to Vuetify
+          Welcome to Vuetify {{ test }}
         </h1>
         <p class="subheading font-weight-regular">
           For help and collaboration with other Vuetify developers,
@@ -85,10 +85,36 @@
 </template>
 
 <script>
+import gql from 'graphql-tag'
+
 export default {
   name: 'HelloWorld',
 
+
+  apollo: {
+    test: {
+      query: gql`query vessel($id: ID!){ vessel(id: $id){
+        id
+        name
+        slug
+      }}`,
+
+      variables: {
+        id: "5debc1e5940191425878a49a"
+      },
+
+      update (data) {
+        console.log('data %o', data)
+        return data.vessel.name
+      },
+      
+    },
+
+  },
+
   data: () => ({
+    test: '',
+
     ecosystem: [
       {
         text: 'vuetify-loader',
