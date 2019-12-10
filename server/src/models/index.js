@@ -1,5 +1,5 @@
-const Vessel = require('./Vessel')
+const Boat = require('./Boat')
 
 module.exports = {
-  Vessel,
+  Boat,
 }

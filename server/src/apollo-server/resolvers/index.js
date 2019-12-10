@@ -2,11 +2,11 @@ const merge = require('deepmerge')
 
 const Common = require('./common')
 
-const Vessel = require('./vessel')
+const Boat = require('./boat')
 
 const resolvers = merge.all([
   Common,
-  Vessel,
+  Boat,
 ])
 
 module.exports = resolvers

@@ -1,0 +1,6 @@
+#import "./fragments/BoatData.gql"
+mutation updateBoat ($id: ID!, $input: BoatInput!) {
+    updateBoat(id: $id, input: $input){
+      ... BoatData
+    }
+ }

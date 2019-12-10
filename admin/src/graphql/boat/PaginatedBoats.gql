@@ -1,0 +1,12 @@
+query paginatedBoats ($args: JSON) {
+    paginatedBoats(args: $args){
+      total
+      items {
+        id
+        createdAt
+        updatedAt
+        name
+        slug
+      }
+    }
+ }

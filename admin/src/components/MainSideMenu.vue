@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-list-item>
+    <!-- <v-list-item>
       <v-list-item-content>
         <v-list-item-title class="title">
           Application
@@ -11,7 +11,7 @@
       </v-list-item-content>
     </v-list-item>
 
-    <v-divider></v-divider>
+    <v-divider></v-divider> -->
 
     <v-list
       dense
@@ -27,7 +27,7 @@
         </v-list-item-icon>
 
         <v-list-item-content>
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
+          <v-list-item-title @click="navigate(item.name)">{{ item.title }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -46,8 +46,8 @@ export default {
 
   data: () => ({
     items: [
-    { title: 'Dashboard', icon: 'mdi-view-dashboard' },
-    { title: 'Boats', icon: 'mdi-ship-wheel' },
+    { title: 'Dashboard', icon: 'mdi-view-dashboard', name: 'dashboard' },
+    { title: 'Boats', icon: 'mdi-ship-wheel', name: 'boats' },
     { title: 'Cruises', icon: 'mdi-map-marker-path' },
     { title: 'Bookings', icon: 'mdi-ticket-account' },
     { title: 'Settings', icon: 'mdi-cogs' },
@@ -61,6 +61,8 @@ export default {
 
   methods: {
     navigate (val) {
+      console.log('val' , val)
+      if(!val) return
       this.$router.push({name: val}).catch(err => {
         console.log('err %o', err)
       })

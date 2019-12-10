@@ -1,0 +1,41 @@
+fragment BoatData on Boat{
+  id
+  createdAt
+  updatedAt
+  name
+  slug
+  excerpt
+  description
+  image
+  boatFeatures
+  boatFeaturesText
+  foodAndDrinksFeatures
+  foodAndDrinksFeaturesText
+  divingFeatures
+  divingFeaturesText
+  gearRental
+  gearRentalText
+  boatLayout
+  boatLayoutText
+  boatSpecifications {
+    length
+    beam
+    topSpeed
+    cruisingSpeed
+    engines
+    maxGuests
+    cabins
+    bathrooms
+    tenders
+    waterCapacity
+    fuelCapacity
+    freshwaterMaker
+  }
+  boatSpecificationsText
+  navSafteyFeatures
+  navSafteyFeaturesText
+  cabins {
+    name
+  }
+  cabinsText
+}

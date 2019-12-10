@@ -1,6 +1,6 @@
 const Common = require('./common')
 
-const Vessel = require('./vessel')
+const Boat = require('./boat')
 
 const Query = `
   type Query {
@@ -18,7 +18,7 @@ const typeDefs = [
   Mutation,
   Common,
 
-  Vessel,
+  Boat,
 ]
 
 module.exports = typeDefs

@@ -3,6 +3,7 @@ const Schema = mongoose.Schema
 const ObjectId = Schema.Types.ObjectId
 
 const Cabin = require('./cabin')
+const BoatSpecifications = require('./boatSpecifications')
 
 const { buildTimestampSchema } = require('./../utils')
 
@@ -67,7 +68,8 @@ const schemaDefinition = {
   },
 
   boatSpecifications: {
-    type: String,
+    type: BoatSpecifications,
+    default: {}
   },
 
   boatSpecificationsText: {

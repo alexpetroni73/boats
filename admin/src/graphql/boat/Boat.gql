@@ -1,0 +1,6 @@
+#import "./fragments/BoatData.gql"
+query boat ($id: ID!) {
+    boat(id: $id){
+      ... BoatData
+    }
+ }

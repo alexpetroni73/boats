@@ -1,4 +1,4 @@
 module.exports = {
   cabin: require('./cabin'),
-  vessel: require('./vessel'),
+  boat: require('./boat'),
 }

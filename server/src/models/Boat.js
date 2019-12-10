@@ -1,4 +1,4 @@
-const { Vessel } = require('./../mongo/models')
+const { Boat } = require('./../mongo/models')
 
 const utils = require('./utils')
 const aggExpr = require('./aggregation')
@@ -6,46 +6,46 @@ const aggExpr = require('./aggregation')
 const mongoose = require('mongoose')
 const ObjectId = mongoose.Types.ObjectId
 
-// const vessel = async function (id) {
-//   let agg = [aggExpr.matchById(id), aggExpr.addId(), ...vesselLogoAgg()]
-//   return (await Vessel.aggregate(agg))[0]
+// const boat = async function (id) {
+//   let agg = [aggExpr.matchById(id), aggExpr.addId(), ...boatLogoAgg()]
+//   return (await Boat.aggregate(agg))[0]
 // }
 
-const vessel = async function (id) {
+const boat = async function (id) {
   let agg = [
     aggExpr.matchById(id),
     aggExpr.addId(),
     cabinsAddIdAggExpr(),
   ]
-  return (await Vessel.aggregate(agg))[0]
+  return (await Boat.aggregate(agg))[0]
 }
 
-const vesselBy = async function (field, value) {
+const boatBy = async function (field, value) {
   let agg = [
     aggExpr.matchByField(field, value),
     aggExpr.addId(),
     cabinsAddIdAggExpr(),
   ]
-  return (await Vessel.aggregate(agg))[0]
+  return (await Boat.aggregate(agg))[0]
 }
 
-const vessels = async function (idArr) {
-  let agg = [aggExpr.matchByIdArr(idArr), aggExpr.addId(), ...vesselLogoAgg()]
-  return await Vessel.aggregate(agg)
+const boats = async function (idArr) {
+  let agg = [aggExpr.matchByIdArr(idArr), aggExpr.addId(), ...boatLogoAgg()]
+  return await Boat.aggregate(agg)
 }
 
-const vesselsBySlug = async function (slugArr) {
-  let agg = [{'$match': {'slug': {'$in': slugArr}}}, aggExpr.addId(), ...vesselLogoAgg()]
-  return await Vessel.aggregate(agg)
+const boatsBySlug = async function (slugArr) {
+  let agg = [{'$match': {'slug': {'$in': slugArr}}}, aggExpr.addId(), ...boatLogoAgg()]
+  return await Boat.aggregate(agg)
 }
 
-const searchVessels = async function (args = {}) {
+const searchBoats = async function (args = {}) {
   const {limit} = args
-  let agg = [getMatchExpr(args), aggExpr.limit(limit), aggExpr.addId(), ...vesselLogoAgg()]
-  return await Vessel.aggregate(agg)
+  let agg = [getMatchExpr(args), aggExpr.limit(limit), aggExpr.addId(), ...boatLogoAgg()]
+  return await Boat.aggregate(agg)
 }
 
-const paginatedVessels = async function (args = {}) {
+const paginatedBoats = async function (args = {}) {
   // defaults
   const {
     page, resultsPerPage,
@@ -55,8 +55,8 @@ const paginatedVessels = async function (args = {}) {
 
   let agg = [getMatchExpr(args)]
 
-  const itemsQ = Vessel.aggregate([...agg, aggExpr.sort(orderBy, order), ...aggExpr.pagination(page, resultsPerPage), aggExpr.addId(), ...vesselLogoAgg()])
-  const totalQ = Vessel.aggregate([...agg, {"$count": "total"}])
+  const itemsQ = Boat.aggregate([...agg, aggExpr.sort(orderBy, order), ...aggExpr.pagination(page, resultsPerPage), aggExpr.addId(), ...boatLogoAgg()])
+  const totalQ = Boat.aggregate([...agg, {"$count": "total"}])
 
   const [items, total] = await Promise.all([itemsQ, totalQ])
 
@@ -83,30 +83,30 @@ const cabin = async function (id) {
     aggExpr.addId(),
   ]
 
-  let result = await Vessel.aggregate(agg)
-  console.log('cabin result %o', result)
+  let result = await Boat.aggregate(agg)
+  // console.log('cabin result %o', result)
   return result[0]
 }
 
 const cabinBySlug = async function (slug) {
   let agg = [{$match : {slug: slug}}, aggExpr.addId(), ...cabinLogoAgg()]
-  return (await Vessel.aggregate(agg))[0]
+  return (await Boat.aggregate(agg))[0]
 }
 
 const cabins = async function (idArr) {
   let agg = [aggExpr.matchByIdArr(idArr), aggExpr.addId(), ...cabinLogoAgg()]
-  return await Vessel.aggregate(agg)
+  return await Boat.aggregate(agg)
 }
 
 const cabinsBySlug = async function (slugArr) {
   let agg = [{$match: {slug: {$in: slugArr}}}, aggExpr.addId(), ...cabinLogoAgg()]
-  return await Vessel.aggregate(agg)
+  return await Boat.aggregate(agg)
 }
 
 const searchCabins = async function (args = {}) {
   const {limit} = args
   let agg = [getMatchExpr(args), aggExpr.limit(limit), aggExpr.addId(), ...cabinLogoAgg()]
-  return await Vessel.aggregate(agg)
+  return await Boat.aggregate(agg)
 }
 
 const paginatedCabins = async function (args = {}) {
@@ -119,8 +119,8 @@ const paginatedCabins = async function (args = {}) {
 
   let agg = [getMatchExpr(args)]
 
-  const itemsQ = Vessel.aggregate([...agg, aggExpr.sort(orderBy, order), ...aggExpr.pagination(page, resultsPerPage), aggExpr.addId(), ...cabinLogoAgg()])
-  const totalQ = Vessel.aggregate([...agg, {"$count": "total"}])
+  const itemsQ = Boat.aggregate([...agg, aggExpr.sort(orderBy, order), ...aggExpr.pagination(page, resultsPerPage), aggExpr.addId(), ...cabinLogoAgg()])
+  const totalQ = Boat.aggregate([...agg, {"$count": "total"}])
 
   const [items, total] = await Promise.all([itemsQ, totalQ])
 
@@ -132,45 +132,45 @@ const paginatedCabins = async function (args = {}) {
 }
 
 
-const createVessel = async function (input) {
+const createBoat = async function (input) {
   // check required fields
   utils.checkNonEmptyProperties(['name'], input)
   // check unicity for provided fields
-  await utils.checkUniqueFieldValue(Vessel, 'name', input.name)
+  await utils.checkUniqueFieldValue(Boat, 'name', input.name)
   // ensure unique slug
   let slugSeed = input.slug ? input.slug : input.name
-  input.slug = await utils.generateUniqueSlug(Vessel, 'slug', slugSeed)
+  input.slug = await utils.generateUniqueSlug(Boat, 'slug', slugSeed)
 
-  const result = await Vessel.create(input)
-  return await vessel(result._id)
+  const result = await Boat.create(input)
+  return await boat(result._id)
 }
 
-const updateVessel = async function (id, input) {
+const updateBoat = async function (id, input) {
   // check for non-empty & unique field values if provided
   const uniqueFieldsProvided = utils.checkNonEmptyProperties(['name', 'slug'], input, false)
 
   input = utils.slugifyObjProperties(input, 'slug')
   if(uniqueFieldsProvided.length){
-    await Promise.all(uniqueFieldsProvided.map(e => utils.checkUniqueFieldValue(Vessel, e, input[e], id)))
+    await Promise.all(uniqueFieldsProvided.map(e => utils.checkUniqueFieldValue(Boat, e, input[e], id)))
   }
 
-  await Vessel.findByIdAndUpdate(id, input)
-  return await vessel(id)
+  await Boat.findByIdAndUpdate(id, input)
+  return await boat(id)
 }
 
-const deleteVessel = async function (id) {
-  let vessel = await Vessel.findById(id)
-  await Vessel.findByIdAndRemove(id)
+const deleteBoat = async function (id) {
+  let boat = await Boat.findById(id)
+  await Boat.findByIdAndRemove(id)
   return id
 }
 
-const deleteVessels = async function (idArr) {
-  let attArr = await Vessel.find({ _id: {$in: idArr }})
-  await Vessel.deleteMany({ _id: {$in: idArr }})
+const deleteBoats = async function (idArr) {
+  let attArr = await Boat.find({ _id: {$in: idArr }})
+  await Boat.deleteMany({ _id: {$in: idArr }})
   return idArr
 }
 
-const createCabin = async function (vesselId, input) {
+const createCabin = async function (boatId, input) {
   // // check required fields
   // utils.checkNonEmptyProperties(['name'], input)
   // // check unicity for provided fields
@@ -178,11 +178,11 @@ const createCabin = async function (vesselId, input) {
   // // ensure unique slug
   // let slugSeed = input.slug ? input.slug : input.name
   // input.slug = await utils.generateUniqueSlug(Cabin, 'slug', slugSeed)
-console.log('createCabin input %o', input)
-  const result = await Vessel.findByIdAndUpdate(vesselId, {$push: {cabins: input}}, {new: true})
+//console.log('createCabin input %o', input)
+  const result = await Boat.findByIdAndUpdate(boatId, {$push: {cabins: input}}, {new: true})
   if(!result) return null
   let addedCabin = result.cabins.slice(-1)[0]
-console.log('addedCabin  %o', addedCabin)
+//console.log('addedCabin  %o', addedCabin)
   return await cabin(addedCabin._id)
 }
 
@@ -201,18 +201,18 @@ const updateCabin = async function (id, input) {
     return acc
   }, {})
 
-  await Vessel.findOneAndUpdate({'cabins._id': ObjectId(id)}, {$set: updateData})
+  await Boat.findOneAndUpdate({'cabins._id': ObjectId(id)}, {$set: updateData})
 
   return await cabin(id)
 }
 
-const deleteCabin = async function (vesselId, id) {
-  await Vessel.findByIdAndUpdate(vesselId, {$pull: {cabins: {'_id': ObjectId(id)}}})
+const deleteCabin = async function (boatId, id) {
+  await Boat.findByIdAndUpdate(boatId, {$pull: {cabins: {'_id': ObjectId(id)}}})
   return id
 }
 
-const deleteCabins = async function (vesselId, idArr) {
-  await Vessel.findByIdAndUpdate(vesselId, {$pull: {cabins: {'_id': {$in: utils.idArrToObjectIdArr(idArr)}}}})
+const deleteCabins = async function (boatId, idArr) {
+  await Boat.findByIdAndUpdate(boatId, {$pull: {cabins: {'_id': {$in: utils.idArrToObjectIdArr(idArr)}}}})
 
   return idArr
 }
@@ -231,7 +231,7 @@ function getMatchExpr (args) {
   return {"$match": exprObject}
 }
 
-function vesselLogoAgg () {
+function boatLogoAgg () {
   return [
     { "$lookup": {
               from: "attachments",
@@ -263,12 +263,12 @@ function cabinsAddIdAggExpr () {
 }
 
 module.exports = {
-  vessel,
-  vesselBy,
-  vessels,
-  vesselsBySlug,
-  searchVessels,
-  paginatedVessels,
+  boat,
+  boatBy,
+  boats,
+  boatsBySlug,
+  searchBoats,
+  paginatedBoats,
 
   cabin,
   cabinBySlug,
@@ -277,10 +277,10 @@ module.exports = {
   searchCabins,
   paginatedCabins,
 
-  createVessel,
-  updateVessel,
-  deleteVessel,
-  deleteVessels,
+  createBoat,
+  updateBoat,
+  deleteBoat,
+  deleteBoats,
 
   createCabin,
   updateCabin,
