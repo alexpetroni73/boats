@@ -67,7 +67,7 @@
 import Boat from '@/graphql/boat/Boat.gql'
 import EditStateMixin from '@/mixins/EditStateMixin'
 import BoatBasicEditor from '@/components/editors/BoatBasicEditor.vue'
-import BoatFeaturesEditor from '@/components/editors/BoatFeaturesEditor.vue'
+import BoatFeaturesContainerEditor from '@/components/editors/BoatFeaturesContainerEditor.vue'
 
 
 export default {
@@ -75,7 +75,7 @@ export default {
 
   components: {
     BoatBasicEditor,
-    BoatFeaturesEditor,
+    BoatFeaturesContainerEditor,
   },
 
   directives: {
@@ -108,7 +108,7 @@ export default {
 
       tabs: [
         {title: "Basic data", slug: 'basic', component: BoatBasicEditor},
-        {title: "Features", slug: 'features', component: BoatFeaturesEditor},
+        {title: "Features", slug: 'features', component: BoatFeaturesContainerEditor},
 
       ]
     }
