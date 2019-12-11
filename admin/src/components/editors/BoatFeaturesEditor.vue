@@ -24,7 +24,7 @@
     >
     <v-textarea
       v-model="editedText"
-      label="Text"
+      label="Features Text"
     ></v-textarea>
    </v-col>
  </v-row>

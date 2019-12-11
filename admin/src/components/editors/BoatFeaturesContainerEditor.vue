@@ -70,8 +70,9 @@ export default {
 
       tabs: [
         {title: "Boat Features", slug: 'boat-features', features: this.boat.boatFeatures, featuresText: this.boat.boatFeaturesText},
-        {title: "Food and Drink", slug: 'food-and-drink', features: this.boat.foodAndDrinksFeatures, featuresText: this.boat.foodAndDrinksFeaturesText},
-
+        {title: "Food & Drinks", slug: 'food-and-drinks', features: this.boat.foodAndDrinksFeatures, featuresText: this.boat.foodAndDrinksFeaturesText},
+        {title: "Diving", slug: 'diving', features: this.boat.divingFeatures, featuresText: this.boat.divingFeaturesText},
+        {title: "Navigation & Safety", slug: 'navigation-safety', features: this.boat.navSafteyFeatures, featuresText: this.boat.navSafteyFeaturesText},
       ]
     }
   },
@@ -90,13 +91,16 @@ export default {
         return parseFeaturesToObj(boatFeatArr)
       }
 
-      if(slug == 'food-and-drink') {
-        return [
-          {name: 'Western Food', slug: 'WesternFood'},
-          {name: 'Buffet style', slug: 'Buffetstyle'},
-          {name: 'Local Food', slug: 'LocalFood'},
-          {name: 'Vegetarian Options', slug: 'VegetarianOptions'},
-        ]
+      if(slug == 'food-and-drinks') {
+        return parseFeaturesToObj(drinksArr)
+      }
+
+      if(slug == 'diving') {
+        return parseFeaturesToObj(divingArr)
+      }
+
+      if(slug == 'navigation-safety') {
+        return parseFeaturesToObj(navSafteyArr)
       }
     },
 
@@ -124,8 +128,16 @@ function parseInputForSlug(slug, e) {
     return {boatFeatures: e.items, boatFeaturesText: e.text}
   }
 
-  if(slug == 'food-and-drink'){
+  if(slug == 'food-and-drinks'){
     return {foodAndDrinksFeatures: e.items, foodAndDrinksFeaturesText: e.text}
+  }
+
+  if(slug == 'diving'){
+    return {divingFeatures: e.items, divingFeaturesText: e.text}
+  }
+
+  if(slug == 'navigation-safety'){
+    return {navSafteyFeatures: e.items, navSafteyFeaturesText: e.text}
   }
 }
 
@@ -161,6 +173,37 @@ const boatFeatArr = [
   "Leisure Deck",
   "Observation Deck",
   "BBQ Area",]
+
+  const drinksArr = [
+    "Western Food",
+    "Local Food",
+    "Vegetarian Options",
+    "Buffet style",
+    "Beer available",
+    "Snacks All Day",
+    "Vegan Options",
+    "Fine Wines Selection",
+    "Free Soft Drinks",
+    "Wine Available",
+    "Al Fresco Dining",
+  ]
+
+  const divingArr = [
+    "DIN Adaptors",
+    "Nitrox available",
+    "Rinse Hoses",
+    "Dive deck",
+    "Tenders for diving",
+    "Shaded Diving Area",
+  ]
+
+  const navSafteyArr = [
+    "Radar",
+    "GPS",
+    "Radio VHF/DSC/SSB",
+    "Life Vests",
+    "Fire Alarm & Fire Extinguishers",
+  ]
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
